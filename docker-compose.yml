@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+   myrabbit:
+      image: rabbitmq:3-management
+      container_name: 'my_rabbit_mq'
+      environment:
+         - RABBITMQ_DEFAULT_USER=admin
+         - RABBITMQ_DEFAULT_PASS=123456
+      hostname: 'rabbitmq'
+      ports:
+         - 5672:5672
+         - 15672:15672
+      volumes:
+          - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+          - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq         
+
+#  frontend:
+#    image: pizzafrontend
+#    build:
+#      context: frontend
+#      dockerfile: Dockerfile
+#    environment: 
+#      - backendUrl=http://backend
+#    ports:
+#      - "5902:80"
+#    depends_on: 
+#      - backend
+#  backend:
+#    image: pizzabackend
+#    build: 
+#      context: backend
+#      dockerfile: Dockerfile
+#    ports: 
+#      - "5001:80"

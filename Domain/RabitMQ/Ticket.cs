@@ -1,4 +1,4 @@
-﻿namespace RabbitRedis.Domain;
+﻿namespace Domain.RabbitMQ;
 
 public class Ticket
 {
