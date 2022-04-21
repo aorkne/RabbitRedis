@@ -9,16 +9,16 @@ EXPOSE 5672
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /src
-COPY ["Producer/Producer.csproj", "Producer/"]
-RUN dotnet restore "Producer/Producer.csproj"
+COPY ["Consumer/Consumer.csproj", "Consumer/"]
+RUN dotnet restore "Consumer/Consumer.csproj"
 COPY . .
-WORKDIR "/src/Producer"
-RUN dotnet build "Producer.csproj" -c Release -o /app/build
+WORKDIR "/src/Consumer"
+RUN dotnet build "Consumer.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Producer.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Consumer.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Producer.dll"]
+ENTRYPOINT ["dotnet", "Consumer.dll"]

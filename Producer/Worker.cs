@@ -27,7 +27,7 @@ public class Worker : BackgroundService
                 CreatedAt = DateTime.Now
             };
 
-            Uri uri = new Uri("rabbitmq://localhost/ticketQueue");
+            Uri uri = new Uri("rabbitmq://rabbitmq/ticketQueue");
             var endPoint = await _bus.GetSendEndpoint(uri);
             await endPoint.Send(ticket);
 

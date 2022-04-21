@@ -10,7 +10,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             x.AddConsumer<TicketConsumer>();
             x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
                 {
-                    config.Host(new Uri("rabbitmq://localhost"), h =>
+                    config.Host(new Uri("rabbitmq://rabbitmq"), h =>
                     {
                         h.Username("admin");
                         h.Password("123456");
