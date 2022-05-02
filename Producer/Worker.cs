@@ -28,7 +28,7 @@ public class Worker : BackgroundService
             var endPoint = await _bus.GetSendEndpoint(uri);
             await endPoint.Send(ticket);
 
-            await Task.Delay(1000, stoppingToken);
+            await Task.Delay(100000, stoppingToken);
         }
     }
 }

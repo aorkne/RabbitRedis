@@ -1,10 +1,30 @@
+using AutoMapper;
 using Consumer;
+using Consumer.Data;
 using Domain.RabbitMQ;
 using MassTransit;
+using StackExchange.Redis;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
+        var provider = services.BuildServiceProvider();
+        var configuration = provider.GetService<IConfiguration>();
+        
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.AddProfile(new AutoMapperProfile());
+        });
+
+        var mapper = config.CreateMapper();
+        
+        services.AddSingleton(mapper);
+        
+        services.AddSingleton<IConnectionMultiplexer>(opt => 
+            ConnectionMultiplexer.Connect(configuration.GetConnectionString("DockerRedisConnection")));
+        
+        services.AddScoped<IRedisRepo, RedisRepo>();
+        
         services.AddMassTransit(x =>
         {
             x.AddConsumer<TicketConsumer>();
@@ -25,9 +45,6 @@ IHost host = Host.CreateDefaultBuilder(args)
                     });
                 }));
         });
-        //services.AddMassTransitHostedService();
-
-        //services.AddHostedService<Worker>();
     })
     .Build();
 

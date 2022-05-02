@@ -10,7 +10,7 @@ public class RabbitMqHelper
     
     public string ConnectionUrl => IsRunningInContainer ?
         "rabbitmq://rabbitmq" :
-        "localhost://rabbitmq";
+        "rabbitmq://localhost";
     
     public string TicketQueueName => "ticketQueue";
 }

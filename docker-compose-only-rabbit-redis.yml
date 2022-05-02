@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  myrabbit:
+    image: rabbitmq:3-management
+    container_name: 'my_rabbit_mq'
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=123456
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+  redis:
+    image: redis
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
