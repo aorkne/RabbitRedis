@@ -7,11 +7,13 @@ public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
     private readonly IBus _bus;
+    readonly RabbitMqHelper _rabbitMqHelper;
 
-    public Worker(ILogger<Worker> logger, IBus bus)
+    public Worker(ILogger<Worker> logger, IBus bus, RabbitMqHelper rabbitMqHelper)
     {
         _logger = logger;
         _bus = bus;
+        _rabbitMqHelper = rabbitMqHelper;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -20,14 +22,9 @@ public class Worker : BackgroundService
         {
             _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
 
-            Ticket ticket = new Ticket(){
-                Id = Guid.NewGuid(),
-                Message = "Hello World",
-                Type = TicketType.Default,
-                CreatedAt = DateTime.Now
-            };
+            Ticket ticket = new (Guid.NewGuid(), "Hello World", TicketType.Default, DateTime.Now);
 
-            Uri uri = new Uri("rabbitmq://rabbitmq/ticketQueue");
+            Uri uri = new Uri($"{_rabbitMqHelper.ConnectionUrl}/{_rabbitMqHelper.TicketQueueName}");
             var endPoint = await _bus.GetSendEndpoint(uri);
             await endPoint.Send(ticket);
 

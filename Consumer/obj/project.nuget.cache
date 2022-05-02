@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TFPiFLdSUtH1hevj47G9bzzIXXaQI/8yY7v8HtPWgeeNM0kV2OpgUcTDZw9eFv9ksO6FMFMDQ65m4XbfDQoD6A==",
+  "dgSpecHash": "H/NbIwAcWua5tZvNc0QfBAMYkHXTurRW3J3RkOkAtjLZFIr5XBJ3+ju1su62EzW/EktZpX5aFcB5AzF5osXpaA==",
   "success": true,
   "projectFilePath": "/Users/aorkne/Work/Learn/RabbitRedis/Consumer/Consumer.csproj",
   "expectedPackageFiles": [
