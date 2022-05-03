@@ -7,9 +7,9 @@ public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
     private readonly IBus _bus;
-    readonly RabbitMqHelper _rabbitMqHelper;
+    readonly DockerHelper _rabbitMqHelper;
 
-    public Worker(ILogger<Worker> logger, IBus bus, RabbitMqHelper rabbitMqHelper)
+    public Worker(ILogger<Worker> logger, IBus bus, DockerHelper rabbitMqHelper)
     {
         _logger = logger;
         _bus = bus;
@@ -24,11 +24,11 @@ public class Worker : BackgroundService
 
             Ticket ticket = new (Guid.NewGuid(), "Hello World", TicketType.Default, DateTime.Now);
 
-            Uri uri = new Uri($"{_rabbitMqHelper.ConnectionUrl}/{_rabbitMqHelper.TicketQueueName}");
+            Uri uri = new Uri($"{_rabbitMqHelper.RabbitMqConnectionUrl}/{_rabbitMqHelper.RabbitMqTicketQueueName}");
             var endPoint = await _bus.GetSendEndpoint(uri);
             await endPoint.Send(ticket);
 
-            await Task.Delay(100000, stoppingToken);
+            await Task.Delay(5000, stoppingToken);
         }
     }
 }

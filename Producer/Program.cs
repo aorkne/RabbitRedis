@@ -5,14 +5,14 @@ using Producer;
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
-        RabbitMqHelper rabbitMqHelper = new();
+        DockerHelper rabbitMqHelper = new();
         services.AddSingleton(rabbitMqHelper);
         
         services.AddMassTransit(x =>
         {
             x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
                 {
-                    config.Host(new Uri(rabbitMqHelper.ConnectionUrl), h =>
+                    config.Host(new Uri(rabbitMqHelper.RabbitMqConnectionUrl), h =>
                     {
                         h.Username("admin");
                         h.Password("123456");

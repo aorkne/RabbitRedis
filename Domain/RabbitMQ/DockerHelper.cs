@@ -1,6 +1,6 @@
 namespace Domain.RabbitMQ;
 
-public class RabbitMqHelper
+public class DockerHelper
 {
     bool? _isRunningInContainer;
 
@@ -8,9 +8,9 @@ public class RabbitMqHelper
         bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out var inContainer) &&
         inContainer;
     
-    public string ConnectionUrl => IsRunningInContainer ?
+    public string RabbitMqConnectionUrl => IsRunningInContainer ?
         "rabbitmq://rabbitmq" :
         "rabbitmq://localhost";
     
-    public string TicketQueueName => "ticketQueue";
+    public string RabbitMqTicketQueueName => "ticketQueue";
 }

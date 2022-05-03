@@ -1,5 +1,6 @@
 using AutoMapper;
 using Consumer.Data;
+using Domain.RabbitMQ;
 using Newtonsoft.Json;
 using MassTransit;
 using Ticket = Domain.RabbitMQ.Ticket;
@@ -29,9 +30,5 @@ public class TicketConsumer : IConsumer<Ticket>
         var storedTicket = await _redisRepo.GetTicket(ticket.RedisId);
         
         Console.WriteLine($"Stored ticket: {JsonConvert.SerializeObject(storedTicket)}");
-        
-        //Validate the Ticket Data
-        //Store to Database
-        //Notify the user via Email / SMS
     }
 }

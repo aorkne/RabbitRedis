@@ -30,9 +30,9 @@ IHost host = Host.CreateDefaultBuilder(args)
             x.AddConsumer<TicketConsumer>();
             x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
                 {
-                    RabbitMqHelper helper = new();
+                    DockerHelper helper = new();
                     
-                    config.Host(new Uri(helper.ConnectionUrl), h =>
+                    config.Host(new Uri(helper.RabbitMqConnectionUrl), h =>
                     {
                         h.Username("admin");
                         h.Password("123456");
